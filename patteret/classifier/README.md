@@ -7,9 +7,9 @@ This hand.xml file can be used to detect hands in an image or a video.
 You will need to install opencv2 to use the xml file or any of the python scripts.
 
 If you have Anaconda try:
-'''
+```
 conda install -c conda-forge opencv
-'''
+```
 
 # Download-image-by-link.py
 
