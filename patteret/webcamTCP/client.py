@@ -1,65 +1,72 @@
 import cv2
-import io
 import socket
+import argparse
 import struct
-import time
 import pickle
-import zlib
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('34.220.191.159', 8485))
-connection = client_socket.makefile('wb')
+###################### Handling terminal arguments ###############################################
+parser = argparse.ArgumentParser(description='Connects to a remote system for image processing.')
+parser.add_argument('IP', metavar='IP', type=str, nargs='+', help='IP address of remote machine.')
 
+parser.add_argument('PORT', metavar='Port', type=str, nargs='+', help='Port of remote machine.')
+
+args = parser.parse_args()
+#####################################################################################################
+# Set up a TCP socket.
+c_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# IP and Port to connect to.
+c_socket.connect((''.join(args.IP), int(''.join(args.PORT))))
+
+# Capture webcam data on default port.
 cam = cv2.VideoCapture(0)
 
-#cam.set(3, 320);
-#cam.set(4, 240);
-cam.set(3, 640);
-cam.set(4, 480);
+# Setting the image size.
+cam.set(3, 640)
+cam.set(4, 480)
 
-img_counter = 0
-
-encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+# Encoding the image.
+encode = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+# Calculates the number of bytes in the image.
 payload_size = struct.calcsize(">L")
 
+# Holds the bytes of the image.
 msg = b""
 while True:
-    for i in range(0,3):
-       ret, frame = cam.read()
+    # Delay screen capture to allow for more processing time.
+    for i in range(0,3): # Obtain a frame from the webcam.
+        ret, frame = cam.read() # Get a frame from the webcam.
+        
+	# encode the image.
+        error, frame = cv2.imencode('.jpg', frame, encode)
+	# Serializ the data for sending.
+        data = pickle.dumps(frame, 0)
+	# Length of the serialized data.
+        length = len(data)
+	# Send it!
+        c_socket.sendall(struct.pack(">L", length) + data)
 
-    result, frame = cv2.imencode('.jpg', frame, encode_param)
-#    data = zlib.compress(pickle.dumps(frame, 0))
-    data = pickle.dumps(frame, 0)
-    size = len(data)
+	# Wait to recive the data.
+        while len(msg) < payload_size:
+            msg += c_socket.recv(4096)
+	# Pull the length of the expecded data from the first packet.
+        recved_msg_length = msg[:payload_size]
+	# Store the payload of data in msg.
+        msg = msg[payload_size:]
+	# Unpack the length of data.
+        msg_length = struct.unpack(">L", recved_msg_length)[0]
+	# Recive remaining data.
+        while len(msg) < msg_length:
+            msg += c_socket.recv(4096)
 
+        frame_data = msg[:msg_length]
+        msg = msg[msg_length:]
 
-    print("{}: {}".format(img_counter, size))
-    client_socket.sendall(struct.pack(">L", size) + data)
-    img_counter += 1
-
-    while len(msg) < payload_size:
-        print("Recv: {}".format(len(msg)))
-        msg += client_socket.recv(4096)
-
-    print("Done Recv: {}".format(len(msg)))
-    packed_msg_size = msg[:payload_size]
-    msg = msg[payload_size:]
-    msg_size = struct.unpack(">L", packed_msg_size)[0]
-
-    print("msg_size: {}".format(msg_size))
-    while len(msg) < msg_size:
-        msg += client_socket.recv(4096)
-
-    frame_data = msg[:msg_size]
-    msg = msg[msg_size:]
-
-    frame2 = pickle.loads(frame_data, fix_imports=True, encoding="bytes")
-    frame2 = cv2.imdecode(frame2, cv2.IMREAD_COLOR)
-    try:
-        cv2.imshow('client',frame2)
+        frame2 = pickle.loads(frame_data, fix_imports=True, encoding="bytes")
+        frame2 = cv2.imdecode(frame2, cv2.IMREAD_COLOR)
+        #try:
+        cv2.imshow('Client', frame2)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    except:
-        print('error')
+        #except:
+        #    print("Client frame error.")
 cam.release()
-
