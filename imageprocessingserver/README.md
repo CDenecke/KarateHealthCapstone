@@ -20,3 +20,6 @@ First clone this repository. In the imageprocessingserver folder run the command
 ```
 pip3 install -r  requirements.txt
 ```
+## Contributing
+
+Please see the original mask-rcnn we forked at https://github.com/multimodallearning/pytorch-mask-rcnn by lasseha
