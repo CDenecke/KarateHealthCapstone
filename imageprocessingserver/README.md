@@ -1,7 +1,4 @@
-# Project Title
-
-Image Processing Server
-
+# Image Processing Server
 ## Description
 This imageprocessingserver is used to subtract the background of images leaving only the object of interest in the frame. This will drastically reduce the noise in an image for other programs that process these images.
 
@@ -26,13 +23,10 @@ pip3 install -r  requirements.txt
 
 ## Running the server
 
-Once  you have all the requirements properly installed you can run the server with the command
-```
-python3 segmentation_image_server.py
-```
+See the read me file in the prject folder.
 
 ## Testing the Servre
-See remoteSegmentationTest file's README.md
+See project/remoteSegmentationTest file's README.md
 
 ## Traning the Network.
 To train the network with your own custom data you will need to navigate to the README.md file located in
@@ -42,4 +36,6 @@ project/hands
 
 ## Contributing
 
-Please see the original mask-rcnn we forked at https://github.com/multimodallearning/pytorch-mask-rcnn by lasseha
+Please see the original mask-rcnn we forked at https://github.com/matterport/Mask_RCNN
+
+Please see the original vgg image anotator at http://www.robots.ox.ac.uk/~vgg/software/via/
