@@ -15,10 +15,12 @@ I would also recommend you run this on the Amazon Web Server or a system with a 
 
 
 ### Installing
-First clone this repository. In the imageprocessingserver folder run the command
-
+First clone this repository. In the imageprocessingserver folder run the commands
 ```
 pip3 install -r  requirements.txt
+```
+```
+python setup.py install
 ```
 
 ## Running the server
