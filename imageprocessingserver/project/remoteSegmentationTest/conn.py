@@ -30,7 +30,7 @@ while True:
     # Delay screen capture to allow for more processing time.
 #    for i in range(0,3): # Obtain a frame from the webcam.
         #ret, frame = cam.read()
-        frame = cv2.imread('self.jpg')
+        frame = cv2.imread('HandTest.jpg')
         frame = cv2.resize(frame,(640,480))
         
         error, frame = cv2.imencode('.jpg', frame, encode)
