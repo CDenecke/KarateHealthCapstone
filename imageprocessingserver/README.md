@@ -27,9 +27,9 @@ pip3 install -r  requirements.txt
 ## Running the serer
 
 Once  you have all the requirements properly installed you can run the server with the command
-'''
+```
 python3 segmentation_image_server.py
-'''
+```
 
 ## Testing the Servre
 See remoteSegmentationTest file's README.md
