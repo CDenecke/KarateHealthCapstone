@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       gcc \
       make \
       git \
+      libgtk2.0-dev \
       graphviz \
       libgl1-mesa-glx \
       libhdf5-dev \
