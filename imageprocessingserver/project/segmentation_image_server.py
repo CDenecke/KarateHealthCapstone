@@ -116,7 +116,7 @@ if __name__ == '__main__':
     import mrcnn.model as modellib
     from mrcnn import visualize
 # Import COCO config
-    sys.path.append(os.path.join(ROOT_DIR, "samples/coco/"))  # To find local version
+    sys.path.append(os.path.join(ROOT_DIR, "project/coco/"))  # To find local version
 #   import coco 
     from project.coco import coco
 
