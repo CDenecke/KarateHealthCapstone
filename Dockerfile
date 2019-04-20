@@ -3,6 +3,9 @@ FROM ubuntu:latest
 
 COPY . .
 
+ENV PORT=8485
+EXPOSE ${PORT}
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
       bzip2 \
       python-pip \
