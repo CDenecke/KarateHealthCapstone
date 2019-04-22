@@ -56,9 +56,9 @@ while True:
         frame2 = pickle.loads(frame_data, fix_imports=True, encoding="bytes")
         frame2 = cv2.imdecode(frame2, cv2.IMREAD_COLOR)
         #try:
-        cv2.imshow('client', frame2)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        #cv2.imshow('client', frame2)
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+        #    break
 
         cv2.imwrite('output.jpg', frame2)
         c_socket.close()
