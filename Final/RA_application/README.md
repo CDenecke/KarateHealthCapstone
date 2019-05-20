@@ -26,4 +26,6 @@ Android Studio
 
 1. Then click on green arrow in Android Virtual Device Manager window that is inline with this named device. A pop-up emulation will apear.
 
-1. Drag and Drop prototypes/ra-assessor-working-v1.apk file onto the simulated device. This will run download apk to device and be runnable.
+1. Drag and Drop prototypes/ra-assessor-working-v3.apk file onto the simulated device. This will run download apk to device and be runnable.
+
+1. The application will open up and prompt you with a network setup screen. Enter any string for username and 10.0.2.2 for ip. This should allow you to connect to the localhosted server.
