@@ -44,4 +44,4 @@ python conn.py 172.0.0.1 8485
 
 Example of dockers cp 
 
-docker cp <containerId>:/project/remoteSegmentationTest/output.jpg /host/path/target
+docker cp \<containerId\>:/project/remoteSegmentationTest/output.jpg /host/path/target
